@@ -1,0 +1,15 @@
+Company Knowledge Base
+
+Our company develops software solutions for businesses.
+
+The company has three major departments: Engineering, Marketing, and Human Resources.
+
+The Engineering department is responsible for designing, developing, testing, and maintaining software products.
+
+The Marketing department handles branding, campaigns, market research, and customer communication.
+
+The Human Resources department manages recruitment, employee onboarding, leave policies, employee records, and workplace policies.
+
+Employees should contact the Human Resources department for questions regarding leave, attendance, benefits, and employment policies.
+
+Engineering project documentation should be maintained in the company's internal knowledge repository so that employees can reuse existing solutions instead of creating them from scratch.
