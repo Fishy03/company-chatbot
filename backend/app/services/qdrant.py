@@ -4,16 +4,32 @@ from qdrant_client.models import (
     VectorParams,
     Filter,
     FieldCondition,
-    MatchValue
+    MatchValue,
+    PayloadSchemaType
 )
 
 
-QDRANT_URL = "http://localhost:6333"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+QDRANT_URL = os.getenv(
+    "QDRANT_URL",
+    "http://localhost:6333"
+)
+
+QDRANT_API_KEY = os.getenv(
+    "QDRANT_API_KEY"
+)
+
 COLLECTION_NAME = "company_knowledge"
 VECTOR_SIZE = 768
 
-
-client = QdrantClient(url=QDRANT_URL)
+client = QdrantClient(
+    url=QDRANT_URL,
+    api_key=QDRANT_API_KEY
+)
 
 
 def create_collection():
@@ -39,6 +55,12 @@ def create_collection():
     else:
 
         print(f"Collection already exists: {COLLECTION_NAME}")
+
+    client.create_payload_index(
+        collection_name=COLLECTION_NAME,
+        field_name="document",
+        field_schema=PayloadSchemaType.KEYWORD
+    )
 
 
 def delete_document(document_name: str):
