@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -21,9 +22,14 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
+frontend_origins = os.getenv(
+    "FRONTEND_URL",
+    "http://localhost:5173"
+).split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[origin.strip() for origin in frontend_origins],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

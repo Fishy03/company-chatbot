@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Admin.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 function Admin({
   currentUser,
@@ -37,7 +38,7 @@ function Admin({
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/documents",
+        `${API_URL}/documents`,
         {
           headers: getAuthHeaders(),
         }
@@ -89,10 +90,12 @@ function Admin({
 
 
   useEffect(() => {
+  async function fetchDocuments() {
+    await loadDocuments();
+  }
 
-    loadDocuments();
-
-  }, []);
+  fetchDocuments();
+}, []);
 
 
   // --------------------------------------------------
@@ -141,7 +144,7 @@ function Admin({
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/documents/upload",
+        `${API_URL}/documents/upload`,
         {
           method: "POST",
 
@@ -223,7 +226,7 @@ function Admin({
     try {
 
       const response = await fetch(
-        `http://127.0.0.1:8000/documents/${encodeURIComponent(filename)}`,
+        `${API_URL}/documents/${encodeURIComponent(filename)}`,
         {
           method: "DELETE",
 

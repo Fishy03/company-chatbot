@@ -23,7 +23,8 @@ QDRANT_API_KEY = os.getenv(
     "QDRANT_API_KEY"
 )
 
-COLLECTION_NAME = "company_knowledge"
+COLLECTION_NAME = "company_knowledge_gemini"
+BACKUP_COLLECTION_NAME = "company_knowledge"
 VECTOR_SIZE = 768
 
 client = QdrantClient(

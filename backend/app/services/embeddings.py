@@ -1,22 +1,37 @@
-import requests
+import os
 
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
 
-OLLAMA_EMBED_URL = "http://localhost:11434/api/embed"
-EMBEDDING_MODEL = "nomic-embed-text"
+load_dotenv()
+
+MODEL_NAME = "gemini-embedding-001"
+VECTOR_SIZE = 768
 
 
 def generate_embedding(text: str) -> list[float]:
+    api_key = os.getenv("GEMINI_API_KEY")
 
-    response = requests.post(
-        OLLAMA_EMBED_URL,
-        json={
-            "model": EMBEDDING_MODEL,
-            "input": text
-        }
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY is not configured")
+
+    client = genai.Client(api_key=api_key)
+
+    response = client.models.embed_content(
+        model=MODEL_NAME,
+        contents=text,
+        config=types.EmbedContentConfig(
+            output_dimensionality=VECTOR_SIZE
+        ),
     )
 
-    response.raise_for_status()
+    embedding = response.embeddings[0].values
 
-    data = response.json()
+    if len(embedding) != VECTOR_SIZE:
+        raise ValueError(
+            f"Expected {VECTOR_SIZE} dimensions, "
+            f"received {len(embedding)}."
+        )
 
-    return data["embeddings"][0]
+    return embedding

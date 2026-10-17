@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "https://127.0.0.1:8000";
 
 function Login({ onLogin }) {
 
@@ -37,7 +38,7 @@ function Login({ onLogin }) {
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/login",
+        `${API_URL}/login`,
         {
           method: "POST",
 

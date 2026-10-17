@@ -3,6 +3,7 @@ import "./App.css";
 import Admin from "./Admin";
 import Login from "./Login";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 function App() {
 
@@ -193,7 +194,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/chat",
+        `${API_URL}/chat`,
         {
           method: "POST",
 
@@ -241,7 +242,7 @@ function App() {
       ]);
 
 
-    } catch (error) {
+    } catch {
 
       setMessages((previous) => [
 
