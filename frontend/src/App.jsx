@@ -1,4 +1,6 @@
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./App.css";
 import Admin from "./Admin";
 import Login from "./Login";
@@ -444,9 +446,15 @@ function App() {
                   </div>
 
 
-                  <div className="message-bubble">
+                  <div className={`message-bubble ${item.role === "assistant" ? "assistant-markdown" : ""}`}>
 
-                    {item.content}
+                    {item.role === "assistant" ? (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {item.content || ""}
+                      </ReactMarkdown>
+                    ) : (
+                      item.content
+                    )}
 
                   </div>
 
